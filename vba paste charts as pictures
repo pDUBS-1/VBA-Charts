@@ -1,0 +1,26 @@
+Sub PasteValues()
+
+Dim PasteRow As Integer, wb As Workbook, awS As Worksheet, twS As Worksheet, cht As ChartObject, count As Integer
+Set wb = ThisWorkbook
+Set awS = wb.Worksheets("Charts")
+Set twS = wb.Worksheets("Teams Charts")
+
+'delete all the prior day's charts in the Teams worksheet
+    twS.Pictures.Delete
+
+'paste as pictures all of today's charts
+count = 1
+PasteRow = 2
+For Each cht In wS.ChartObjects
+    cht.Chart.ChartArea.Copy
+    If count Mod 2 = 1 Then
+        twS.Range("B" & PasteRow).PasteSpecial xlPasteValues
+        count = count + 1
+    Else
+        twS.Range("M" & PasteRow).PasteSpecial xlPasteValues
+        PasteRow = PasteRow + 25
+        count = count + 1
+    End If
+Next cht
+   
+End Sub
